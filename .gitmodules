@@ -1,0 +1,9 @@
+[submodule "ThirdParty/glfw"]
+	path = ThirdParty/glfw
+	url = https://github.com/themetadevv/glfw.git
+[submodule "ThirdParty/glad"]
+	path = ThirdParty/glad
+	url = https://github.com/themetadevv/glad-4.6.git
+[submodule "ThirdParty/spdlog"]
+	path = ThirdParty/spdlog
+	url = https://github.com/gabime/spdlog.git
