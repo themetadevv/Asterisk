@@ -53,7 +53,7 @@ namespace asterisk {
 
 #ifdef DEBUG_BUILD
 
-#define ASTR_RUNTIME_ASSERT(expr, ...)                                         \
+#define RUNTIME_ASSERT(expr, ...)                                              \
     do {                                                                       \
         while (!(expr)) {                                                      \
             std::string msg = std::format(                                     \
@@ -79,15 +79,14 @@ namespace asterisk {
                     DEBUG_BREAK; break;										   \
                                                                                \
                 case ::asterisk::DialogResult::Ignore:                         \
-                    goto runtime_assert_end;                                   \
+                    ::asterisk::TerminateProgramOnFailure(); break;            \
                                                                                \
                 default:                                                       \
-                    goto runtime_assert_end;                                   \
+                    ::asterisk::TerminateProgramOnFailure(); break;            \
             }                                                                  \
         }                                                                      \
-        runtime_assert_end:;                                                   \
     } while (false)
 
 #else
-#define runtime_assert(...)
+#define RUNTIME_ASSERT(...)
 #endif

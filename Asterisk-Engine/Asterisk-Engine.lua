@@ -47,7 +47,7 @@ project "Asterisk-Engine"
     includedirs {
         -- this Project
         PrjLocation.. "engine",
-        PrjLocation.. "engine/include",
+        PrjLocation.. "engine/src",
 
         -- header only
         ThirdParty.SPDLOG,

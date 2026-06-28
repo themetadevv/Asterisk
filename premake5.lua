@@ -15,7 +15,7 @@ ThirdParty = {
 }
 
 Projects = {
-	ASTERISK_ENGINE = WorkspaceDir.. "Asterisk-Engine/engine/include"
+	ASTERISK_ENGINE = WorkspaceDir.. "Asterisk-Engine/engine/src"
 }
 
 -- ===== Group: Vendors =====

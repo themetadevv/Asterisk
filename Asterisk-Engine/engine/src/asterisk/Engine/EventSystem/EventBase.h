@@ -33,5 +33,5 @@ namespace asterisk {
 #define DECLARE_EVENT(type) \
 	virtual EventType GetEventType() const override { return type; } \
 	virtual std::string GetEventTypeString() const override { return #type; } \
-	static EventType GetEventTypeStatic() { return type; }
+	static  EventType GetEventTypeStatic() { return type; }
 }

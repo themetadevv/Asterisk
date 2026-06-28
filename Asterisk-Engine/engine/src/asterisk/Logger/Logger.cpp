@@ -11,7 +11,7 @@ namespace asterisk {
 	static std::unordered_map<std::string, std::shared_ptr<spdlog::sinks::stdout_color_sink_mt>> s_loggerSink;
 	static std::unordered_map<std::string, std::shared_ptr<spdlog::logger>> s_loggers;
 
-	void logger::create_logger(const std::string& logger_name, const std::string& log_pattern) {
+	void Logger::CreateLogger(const std::string& logger_name, const std::string& log_pattern) {
 		if (s_loggers.contains(logger_name))
 			return;
 
@@ -33,7 +33,7 @@ namespace asterisk {
 		s_loggers.try_emplace(logger_name, std::move(logger));
 	}
 
-	const std::shared_ptr<spdlog::logger>& logger::get_logger(const std::string& logger_name) {
+	const std::shared_ptr<spdlog::logger>& Logger::GetLogger(const std::string& logger_name) {
 		auto it = s_loggers.find(logger_name);
 		if (it == s_loggers.end())
 			throw std::runtime_error("[Logger] logger not found " + logger_name);

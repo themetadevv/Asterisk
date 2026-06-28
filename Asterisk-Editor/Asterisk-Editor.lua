@@ -23,7 +23,6 @@ project "Asterisk-Editor"
 
 	includedirs {
 		PrjLocation.. "editor",
-		PrjLocation.. "editor/include",
 
         ThirdParty.SPDLOG,
 
