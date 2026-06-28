@@ -53,6 +53,9 @@ namespace asterisk {
 		// .......
 
 		ProcessWindowEvents();
+		ProcessInputEvents();
+
+		Input::Initialize();
 	}
 
 	WindowsWindow::~WindowsWindow() {
@@ -64,6 +67,7 @@ namespace asterisk {
 	}
 
 	void WindowsWindow::ProcessWindowEvents() {
+		// window resize event
 		glfwSetWindowSizeCallback(
 			m_Handle, 
 			[](GLFWwindow* window, int width, int height) {
@@ -77,6 +81,7 @@ namespace asterisk {
 			}
 		);
 
+		// window move event
 		glfwSetWindowPosCallback(
 			m_Handle,
 			[](GLFWwindow* window, int x, int y) {
@@ -87,6 +92,7 @@ namespace asterisk {
 			}
 		);
 
+		// window minimize event
 		glfwSetWindowIconifyCallback(
 			m_Handle,
 			[](GLFWwindow* window, int iconified) {
@@ -97,6 +103,7 @@ namespace asterisk {
 			}
 		);
 
+		// window close event
 		glfwSetWindowCloseCallback(
 			m_Handle,
 			[](GLFWwindow* window) {
@@ -104,6 +111,57 @@ namespace asterisk {
 				
 				WindowCloseEvent e(_this, (float)glfwGetTime());
 				EventManager::FireEvent(e);
+			}
+		);
+
+		// window focus loss event
+		glfwSetWindowFocusCallback(
+			m_Handle,
+			[](GLFWwindow* window, int focused) {
+				auto _this = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+				if (focused == 0) {
+					Input::ClearInput();
+				}
+			}
+		);
+	}
+
+	void WindowsWindow::ProcessInputEvents() {
+		// key event
+		glfwSetKeyCallback(
+			m_Handle,
+			[](GLFWwindow* window, int key, int scancode, int action, int mods) {
+				auto _this = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+
+				switch (action) {
+					case GLFW_PRESS: {
+						Input::OnKeyPressInternal((KeyCode)key);
+						break;
+					}
+
+					case GLFW_RELEASE: {
+						Input::OnKeyReleasedInternal((KeyCode)key);
+						break;
+					}
+				}
+			}
+		);
+
+		// mouse button event 
+		glfwSetMouseButtonCallback(
+			m_Handle,
+			[](GLFWwindow* window, int button, int action, int mods) {
+				switch (action) {
+					case GLFW_PRESS: {
+						Input::OnMousePressInternal((MouseCode)button);
+						break;
+					}
+
+					case GLFW_RELEASE: {
+						Input::OnMouseReleasedInternal((MouseCode)button);
+						break;
+					}
+				}
 			}
 		);
 	}
@@ -152,6 +210,7 @@ namespace asterisk {
 	}
 
 	void WindowsWindow::Update(float dt) {
+		Input::Update();
 		glfwSwapBuffers(m_Handle);
 		glfwPollEvents();
 	}

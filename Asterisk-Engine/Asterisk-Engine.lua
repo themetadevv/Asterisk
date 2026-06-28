@@ -20,7 +20,7 @@ project "Asterisk-Engine"
     PrjLocation = "%{prj.location}/"
     
     pchheader "astpch.h"
-    pchsource "engine/astpch.cpp"
+    pchsource "astpch.cpp"
 
     postbuildcommands {
          -- to exports dir
@@ -40,14 +40,14 @@ project "Asterisk-Engine"
 
     files {
         "**.lua",
-        "engine/**.h",
-        "engine/**.cpp"
+        "**.h",
+        "**.cpp"
     }
 
     includedirs {
         -- this Project
-        PrjLocation.. "engine",
-        PrjLocation.. "engine/src",
+        PrjLocation,
+        PrjLocation.. "src",
 
         -- header only
         ThirdParty.SPDLOG,

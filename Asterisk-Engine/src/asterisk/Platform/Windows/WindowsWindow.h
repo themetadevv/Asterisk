@@ -3,13 +3,14 @@
 #include "asterisk/Core/Common.h"
 
 #include "asterisk/Engine/Window/Window.h"
+#include "asterisk/Engine/Input/Input.h"
 
 // forward declare
 struct GLFWwindow;
 
 namespace asterisk {
 
-	class WindowsWindow final : public Window {
+	class WindowsWindow final : public Window, Input {
 	private:
 		GLFWwindow* m_Handle         = nullptr;
 		void* m_PrimaryMonitorHandle = nullptr;
@@ -22,6 +23,7 @@ namespace asterisk {
 
 	private:
 		void ProcessWindowEvents();
+		void ProcessInputEvents();
 
 	public:
 		// getters

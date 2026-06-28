@@ -2,6 +2,7 @@
 
 #include "asterisk/Core/Common.h"
 #include "asterisk/Math/Math.h"
+#include "asterisk/Engine/Input/InputCode.h"
 
 DISABLE_ALL_WARNING
 #include <spdlog/fmt/fmt.h>
@@ -40,5 +41,17 @@ struct fmt::formatter<Vector4> {
 	template <typename FormatContext>
 	auto format(const Vector4& v, FormatContext& ctx) const {
 		return fmt::format_to(ctx.out(), "({}, {}, {}, {})", v.x, v.y, v.z, v.w);
+	}
+};
+
+template<>
+struct fmt::formatter<KeyCode> {
+	constexpr auto parse(fmt::format_parse_context& ctx) {
+		return ctx.begin();
+	}
+
+	template <typename FormatContext>
+	auto format(const KeyCode& v, FormatContext& ctx) const {
+		return fmt::format_to(ctx.out(), "{}", (int)v);
 	}
 };
