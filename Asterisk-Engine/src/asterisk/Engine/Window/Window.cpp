@@ -3,7 +3,7 @@
 
 #include "asterisk/Core/Runtime.h"
 
-#include "asterisk/Platform/Windows/WindowsWindow.h"
+#include "asterisk/Engine/Platform/Windows/WindowsWindow.h"
 #include "asterisk/Engine/Window/Window.h"
 
 namespace asterisk {

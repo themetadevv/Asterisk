@@ -1,21 +1,25 @@
 #pragma once
 
 #include "asterisk/Core/Common.h"
+#include "asterisk/Core/SmartPointers.h"
 
 #include "asterisk/Engine/Window/Window.h"
 #include "asterisk/Engine/Input/Input.h"
+
+#include "asterisk/Engine/Renderer/RenderContext.h"
 
 // forward declare
 struct GLFWwindow;
 
 namespace asterisk {
-
 	class WindowsWindow final : public Window, Input {
 	private:
 		GLFWwindow* m_Handle         = nullptr;
 		void* m_PrimaryMonitorHandle = nullptr;
 
 		WindowProperty m_Property;
+
+		UniquePtr<RenderContext> m_RenderContext;
 
 	public:
 		WindowsWindow(const WindowProperty& _props);
@@ -49,4 +53,3 @@ namespace asterisk {
 		void Close() override;
 	};
 }
-

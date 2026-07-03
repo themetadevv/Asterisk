@@ -11,6 +11,7 @@ ThirdPartyDir = "%{wks.location}/ThirdParty/"
 ThirdParty = {
 	GLFW        = ThirdPartyDir.. "glfw/include",
 	GLAD        = ThirdPartyDir.. "glad/include",
+	IMGUI       = ThirdPartyDir.. "imgui",
 	SPDLOG      = ThirdPartyDir.. "spdlog/include"
 }
 
@@ -22,6 +23,7 @@ Projects = {
 group "ThirdParties"
 	include "ThirdParty/glfw"
 	include "ThirdParty/glad"
+	include "ThirdParty/imgui"
 group ""
 
 -- ===== Group: Projects =====

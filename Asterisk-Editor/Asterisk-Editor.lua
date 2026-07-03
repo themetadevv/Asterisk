@@ -25,12 +25,14 @@ project "Asterisk-Editor"
 		PrjLocation.. "editor",
 
         ThirdParty.SPDLOG,
+        ThirdParty.IMGUI,
 
 		Projects.ASTERISK_ENGINE
 	}
 
 	links {
-		"Asterisk-Engine"
+		"Asterisk-Engine",
+        "imgui"
 	}
 
 	-- kind

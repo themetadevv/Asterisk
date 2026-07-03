@@ -7,7 +7,7 @@
 #include "asterisk/Engine/EventSystem/EventManager.h"
 #include "asterisk/Engine/Events/WindowEvents.h"
 
-#include "asterisk/Platform/Windows/WindowsWindow.h"
+#include "asterisk/Engine/Platform/Windows/WindowsWindow.h"
 
 DISABLE_ALL_WARNING
 #include <GLFW/glfw3.h>
@@ -46,6 +46,10 @@ namespace asterisk {
 		// .......
 		// .......
 
+		glfwMakeContextCurrent(m_Handle);
+		m_RenderContext = RenderContext::Create({ m_Handle, glfwGetProcAddress });
+
+		glfwSwapInterval(m_Property.VSync ? 1 : 0);
 		glfwSetWindowUserPointer(m_Handle, this);
 
 		// process events
@@ -122,6 +126,15 @@ namespace asterisk {
 				if (focused == 0) {
 					Input::ClearInput();
 				}
+			}
+		);
+
+		// framebuffer resize event
+		glfwSetFramebufferSizeCallback(
+			m_Handle,
+			[](GLFWwindow* window, int width, int height) {
+				auto _this = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+				_this->m_RenderContext->SetViewport((int)width, (int)height);
 			}
 		);
 	}

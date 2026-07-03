@@ -51,6 +51,7 @@ project "Asterisk-Engine"
 
         -- header only
         ThirdParty.SPDLOG,
+        ThirdParty.IMGUI,
         
         -- compiled
         ThirdParty.GLFW,
@@ -59,7 +60,8 @@ project "Asterisk-Engine"
 
     links {
         "glfw",
-        "glad"
+        "glad",
+        "imgui"
     }
 
     -- kind
