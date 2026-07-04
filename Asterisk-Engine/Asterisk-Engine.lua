@@ -20,7 +20,7 @@ project "Asterisk-Engine"
     PrjLocation = "%{prj.location}/"
     
     pchheader "astpch.h"
-    pchsource "astpch.cpp"
+    pchsource "src/astpch.cpp"
 
     postbuildcommands {
          -- to exports dir
@@ -77,10 +77,6 @@ project "Asterisk-Engine"
         }
     filter {}
 
-    filter "toolset:msc"
-        disablewarnings { "4251" }
-    filter {}
-
     -- platform
     filter "system:windows"
         systemversion "latest"
@@ -94,7 +90,7 @@ project "Asterisk-Engine"
         runtime "Debug"
         symbols "on"
         optimize "off"
-        buildoptions { "/utf-8"}
+        buildoptions { "/utf-8", "/wd4251" }
 
         defines {
             "DEBUG_BUILD"
@@ -106,7 +102,7 @@ project "Asterisk-Engine"
         runtime "Release"
         symbols "off" -- 'on' for debugging release crashes
         optimize "on"
-        buildoptions { "/utf-8"}
+        buildoptions { "/utf-8", "/wd4251" }
 
         defines {
             "RELEASE_BUILD"

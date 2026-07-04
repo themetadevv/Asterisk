@@ -1,7 +1,8 @@
 
 #include <Engine/EntryPoint.h>
-#include <Math/MatrixOperators.h>
 #include <Logger/Logger.h>
+
+#include <Math/Matrix.h>
 
 #include <imgui.h>
 
@@ -18,24 +19,22 @@ public:
 
 		ImGui::SetCurrentContext(imgui_layer.GetContext());
 
-		Matrix2x4 A (
-			1.0f, 2.0f, 3.0f, 4.0f,
-			1.0f, 2.0f, 3.0f, 4.0f
+		Matrix2x2 A(
+			2.0f, 2.0f,
+			2.0f, 2.0f
 		);
 
-		Matrix4x4 B (
-			1.0f, 2.0f, 3.0f, 4.0f,
-			1.0f, 2.0f, 3.0f, 4.0f,
-			1.0f, 2.0f, 3.0f, 4.0f,
-			1.0f, 2.0f, 3.0f, 4.0f
+		Matrix2x2 B(
+			2.0f, 2.0f,
+			2.0f, 2.0f
 		);
 
 		auto C = A * B;
 
-		ASTR_INFO(
-			"Matrix: \n {}, {}, {}, {} \n {}, {}, {}, {}",
-			C.m[0][0], C.m[1][0], C.m[2][0], C.m[3][0],
-			C.m[0][1], C.m[1][1], C.m[2][1], C.m[3][1]
+		ASTR_DEBUG(
+			"Matrix C: \n {} {} \n {} {}",
+			C.m[0][0], C.m[1][0],
+			C.m[0][1], C.m[1][1]
 		);
 	}
 
