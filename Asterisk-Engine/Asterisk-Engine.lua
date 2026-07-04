@@ -77,6 +77,10 @@ project "Asterisk-Engine"
         }
     filter {}
 
+    filter "toolset:msc"
+        disablewarnings { "4251" }
+    filter {}
+
     -- platform
     filter "system:windows"
         systemversion "latest"

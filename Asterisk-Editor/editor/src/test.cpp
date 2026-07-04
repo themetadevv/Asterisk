@@ -1,60 +1,60 @@
 
-#include <asterisk/Engine/Window/Window.h>
-#include <asterisk/Engine/Input/Input.h>
-#include <asterisk/Logger/Logger.h>
-#include <asterisk/Core/Runtime.h>
-
-#include <asterisk/Math/Math.h>
-
-#include <asterisk/Engine/EventSystem/EventManager.h>
-#include <asterisk/Engine/Events/WindowEvents.h>
-
-#include <asterisk/Engine/LayerSystem/LayerStack.h>
-
-#include <asterisk/Engine/Layers/ImGuiLayer.h>
-#include <asterisk/Engine/Renderer/RenderCommand.h>
+#include <Engine/EntryPoint.h>
+#include <Math/MatrixOperators.h>
+#include <Logger/Logger.h>
 
 #include <imgui.h>
 
-int main() {
-	asterisk::Logger::CreateLogger(ASTERISK_ENGINE_LOGGER_NAME);
+using namespace asterisk;
 
-	UniquePtr<asterisk::Window> window    = asterisk::Window::Create();
-	UniquePtr<asterisk::LayerStack> stack = CreateUnique<asterisk::LayerStack>();
+class EditorLayer : public Layer {
+public:
+	EditorLayer() : Layer("Editor Layer") 
+	{ }
 
-	bool running = true;
-	asterisk::EventManager::SubscribeToEvent<asterisk::WindowCloseEvent>(
-		[&](asterisk::Event& e) {
-			auto& wce = asterisk::CastEvent<asterisk::WindowCloseEvent>(e);
-			if (wce.GetWindow() == window.get()) {
-				ASTR_INFO("Window Closed (elapsed time): {}", wce.GetElapsedTime());
-				running = false;
-			}
-		}
-	);
+	void OnAttach() override {
+		auto& engine = Engine::Get();
+		auto& imgui_layer = engine.GetImGuiLayer();
 
-	asterisk::ImGuiLayer* imgui_layer = new asterisk::ImGuiLayer(window->GetHandle());
-	stack->PushLayer(imgui_layer);
+		ImGui::SetCurrentContext(imgui_layer.GetContext());
 
-	asterisk::RenderCommand::InitializeRenderer();
-
-	imgui_layer->OnAttach();
-	ImGui::SetCurrentContext(imgui_layer->GetContext());
-
-	while (running) {
-		asterisk::RenderCommand::ClearColor(asterisk::ColorRGBA((uint8_t)45));
-
-		imgui_layer->RenderImGui(
-			[]() {
-				ImGui::Begin("Test");
-
-				ImGui::End();
-			}
+		Matrix2x4 A (
+			1.0f, 2.0f, 3.0f, 4.0f,
+			1.0f, 2.0f, 3.0f, 4.0f
 		);
 
-		imgui_layer->OnUpdate(0.0f);
-		imgui_layer->OnRender(0.0f);
+		Matrix4x4 B (
+			1.0f, 2.0f, 3.0f, 4.0f,
+			1.0f, 2.0f, 3.0f, 4.0f,
+			1.0f, 2.0f, 3.0f, 4.0f,
+			1.0f, 2.0f, 3.0f, 4.0f
+		);
 
-		window->Update(0.0f);
+		auto C = A * B;
+
+		ASTR_INFO(
+			"Matrix: \n {}, {}, {}, {} \n {}, {}, {}, {}",
+			C.m[0][0], C.m[1][0], C.m[2][0], C.m[3][0],
+			C.m[0][1], C.m[1][1], C.m[2][1], C.m[3][1]
+		);
 	}
+
+	void OnRender(float dt) override {
+		ImGui::Begin("Editor Layer");
+
+		ImGui::End();
+	}
+};
+
+class AsteriskEditor : public asterisk::Engine {
+public:
+	AsteriskEditor(const asterisk::EngineSetting& _setting = asterisk::EngineSetting()) : 
+		asterisk::Engine(_setting)
+	{
+		PushLayer(new EditorLayer());
+	}
+};
+
+asterisk::Engine* asterisk::Create() {
+	return new AsteriskEditor();
 }
