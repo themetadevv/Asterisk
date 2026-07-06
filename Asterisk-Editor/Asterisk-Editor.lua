@@ -61,7 +61,7 @@ project "Asterisk-Editor"
         runtime "Debug"
         symbols "on"
         optimize "off"
-        buildoptions { "/utf-8" }
+        buildoptions { "/utf-8", "/wd4251" }
 
         defines {
             "DEBUG_BUILD"
@@ -73,7 +73,7 @@ project "Asterisk-Editor"
         runtime "Release"
         symbols "off" -- 'on' for debugging release crashes
         optimize "on"
-        buildoptions { "/utf-8" }
+        buildoptions { "/utf-8", "/wd4251" }
 
         defines {
             "RELEASE_BUILD"

@@ -100,4 +100,5 @@ namespace asterisk {
 	#define ASTR_INFO(...)
 	#define ASTR_WARN(...)
 	#define ASTR_ERROR(...)
+	#define ASTR_DEBUG(...)
 #endif

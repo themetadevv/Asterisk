@@ -2,7 +2,7 @@
 #include <Engine/EntryPoint.h>
 #include <Logger/Logger.h>
 
-#include <Math/Matrix.h>
+#include <Math/MatrixAliases.h>
 
 #include <imgui.h>
 
@@ -20,13 +20,13 @@ public:
 		ImGui::SetCurrentContext(imgui_layer.GetContext());
 
 		Matrix2x2 A(
-			2.0f, 2.0f,
-			2.0f, 2.0f
+			2, 2,
+			2, 2
 		);
 
 		Matrix2x2 B(
-			2.0f, 2.0f,
-			2.0f, 2.0f
+			2, 2,
+			2, 2
 		);
 
 		auto C = A * B;
