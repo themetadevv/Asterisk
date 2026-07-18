@@ -1,0 +1,16 @@
+Core Systems
+1. Linear Allocator (Done)
+2. Native File Dialog
+3. Time Class (Done)
+4. UUID Generator (Done)
+5. Native Module Loader
+
+Engine -> Renderer Objects
+1. Vertex Buffer Object
+2. Index Buffer Object
+3. Vertex Array Object
+4. Frame Buffer Object
+6. Shader Loader
+5. Texture Loader
+
+Engine -> Renderer2D

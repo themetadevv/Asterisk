@@ -3,6 +3,10 @@
 #include <Logger/Logger.h>
 
 #include <Math/MatrixAliases.h>
+#include <Allocator/LinearAllocator.h>
+
+#include <Engine/Time/Time.h>
+#include <Engine/UUID/UUID.h>
 
 #include <imgui.h>
 
@@ -10,35 +14,27 @@ using namespace asterisk;
 
 class EditorLayer : public Layer {
 public:
+	TimeStep ts;
+
+	SharedPtr<VertexBuffer> m_VertexBuffer;
+	SharedPtr<VertexBuffer> m_IndexBuffer;
+
 	EditorLayer() : Layer("Editor Layer") 
 	{ }
 
 	void OnAttach() override {
+
 		auto& engine = Engine::Get();
 		auto& imgui_layer = engine.GetImGuiLayer();
 
 		ImGui::SetCurrentContext(imgui_layer.GetContext());
-
-		Matrix2x2 A(
-			2, 2,
-			2, 2
-		);
-
-		Matrix2x2 B(
-			2, 2,
-			2, 2
-		);
-
-		auto C = A * B;
-
-		ASTR_DEBUG(
-			"Matrix C: \n {} {} \n {} {}",
-			C.m[0][0], C.m[1][0],
-			C.m[0][1], C.m[1][1]
-		);
 	}
 
 	void OnRender(float dt) override {
+		uint64_t id = (uint64_t)UUID();
+
+		ts.Update();
+
 		ImGui::Begin("Editor Layer");
 
 		ImGui::End();
