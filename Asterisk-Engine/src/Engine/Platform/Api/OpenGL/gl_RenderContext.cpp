@@ -2,7 +2,7 @@
 #include "astpch.h"
 
 #include "Core/Constants.h"
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 
 #include "Logger/Logger.h"
 

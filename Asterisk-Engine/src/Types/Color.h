@@ -3,6 +3,7 @@
 #include "Core/Common.h"
 
 namespace asterisk {
+	// todo: use 1byte dataa type for each comp
 	struct ColorRGBA {
 		float r, g, b, a;
 

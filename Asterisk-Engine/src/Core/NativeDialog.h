@@ -48,7 +48,7 @@ namespace asterisk {
 		void* parent_window = nullptr
 	);
 
-	ASTERISK_ENGINE_API void TerminateProgramOnFailure();
+	ASTERISK_ENGINE_API void TerminateProgram();
 }
 
 #ifdef DEBUG_BUILD
@@ -73,16 +73,16 @@ namespace asterisk {
                                                                                \
             switch (result) {                                                  \
                 case ::asterisk::DialogResult::Abort:                          \
-                    ::asterisk::TerminateProgramOnFailure(); break;            \
+                    ::asterisk::TerminateProgram(); break;                     \
                                                                                \
                 case ::asterisk::DialogResult::Retry:                          \
                     DEBUG_BREAK; break;										   \
                                                                                \
                 case ::asterisk::DialogResult::Ignore:                         \
-                    ::asterisk::TerminateProgramOnFailure(); break;            \
+                    ::asterisk::TerminateProgram(); break;                     \
                                                                                \
                 default:                                                       \
-                    ::asterisk::TerminateProgramOnFailure(); break;            \
+                    ::asterisk::TerminateProgram(); break;                     \
             }                                                                  \
         }                                                                      \
     } while (false)

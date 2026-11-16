@@ -1,7 +1,7 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 
 #include "Engine/Platform/Api/OpenGL/gl_ImGuiRenderer.h"
 #include "Engine/Renderer/RenderApi.h"

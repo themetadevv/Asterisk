@@ -1,7 +1,7 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 
 #include "Engine/Platform/Windows/WindowsWindow.h"
 #include "Engine/Window/Window.h"

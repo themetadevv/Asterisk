@@ -2,8 +2,10 @@
 
 // STL
 #include <iostream>
+#include <fstream>
 
 #include <string>
+#include <cstring>
 
 #include <map>
 #include <unordered_map>

@@ -18,7 +18,7 @@ namespace asterisk {
 		void Bind() override;
 		void Unbind() override;
 
-		void SetDataDynamic(size_t size, const void* data) override;
+		void SetData(size_t size, const void* data) override;
 	};
 
 	class OpenGL_IndexBuffer : public IndexBuffer {

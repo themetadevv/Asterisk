@@ -1,7 +1,6 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
 #include "Logger/Logger.h"
 
 #include "Core/RandomNumGenerator.h"

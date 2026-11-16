@@ -4,39 +4,39 @@
 
 #include "Types/Containers.h"
 #include "Types/SmartPointers.h"
+#include "Types/String.h"
 
 #include "Engine/Renderer/Enums.h"
 
 namespace asterisk {
 	struct BufferData {
+		String Name;
 		AttributeType Type;
 		int ComponentCount;
 		int Size;
 		bool Normalized;
-
 		size_t OffsetInMemory = 0;
 
-		BufferData(const char* name, AttributeType type, bool normalize) : 
+		BufferData(StringView name, AttributeType type, bool normalize) :
+			Name(name),
 			Type(type),
 			ComponentCount(AttributeComponentCount(type)),
 			Size(AttributeSize(type)),
 			Normalized(normalize)
-		{
-
-		}
+		{ }
 	};
 
 	class ASTERISK_ENGINE_API BufferLayout {
 	private:
 		uint32_t m_Stride = 0;
-		Vector<BufferData> m_BufferData;
+		Vector<BufferData> m_BufferStorage;
 
 	public:
-		constexpr auto begin() { return m_BufferData.begin(); }
-		constexpr auto end()   { return m_BufferData.end(); }
+		constexpr auto begin() { return m_BufferStorage.begin(); }
+		constexpr auto end()   { return m_BufferStorage.end(); }
 
-		constexpr auto cbegin() const { return m_BufferData.cbegin(); }
-		constexpr auto cend()   const { return m_BufferData.cend(); }
+		constexpr auto cbegin() const { return m_BufferStorage.cbegin(); }
+		constexpr auto cend()   const { return m_BufferStorage.cend(); }
 
 	public:
 		uint32_t GetStride() const { return m_Stride; }
@@ -44,6 +44,10 @@ namespace asterisk {
 	public:
 		void AddBufferData(BufferData& data);
 	};
+
+	/*
+		BUFFERS
+	*/
 
 	class ASTERISK_ENGINE_API VertexBuffer {
 	protected:
@@ -59,7 +63,7 @@ namespace asterisk {
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 
-		virtual void SetDataDynamic(size_t size, const void* data) = 0;
+		virtual void SetData(size_t size, const void* data) = 0;
 
 	public:
 		static SharedPtr<VertexBuffer> Create(size_t buffer_data_size);

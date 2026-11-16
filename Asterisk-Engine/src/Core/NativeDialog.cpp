@@ -5,7 +5,7 @@
 #include <windows.h>
 #endif
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 
 namespace asterisk {
 	static int ShowNativeMessageDialog(
@@ -36,6 +36,7 @@ namespace asterisk {
 	) {
 		unsigned int type = 0;
 
+		#ifdef PLATFORM_WINDOWS
 		switch (buttons) {
 			case DialogButtons::OK:
 				type |= MB_OK; break;
@@ -59,7 +60,7 @@ namespace asterisk {
 				type |= 0; break;
 			}
 
-			switch (icons) {
+		switch (icons) {
 			case DialogIcon::None:
 				type |= 0; break;
 
@@ -90,6 +91,9 @@ namespace asterisk {
 			case IDNO:     return DialogResult::No;
 			default:       return DialogResult::None;
 		}
+		#else
+		#error your platform is currently not supported.
+		#endif
 	}
 
 	DialogResult ShowErrorOccuredDialog(const std::string& msg, void* parent_window) {
@@ -100,12 +104,11 @@ namespace asterisk {
 		return ShowDialog("Warning", msg, DialogButtons::OK, DialogIcon::Warning, parent_window);
 	}
 
-	void TerminateProgramOnFailure() {
+	void TerminateProgram() {
 		#ifdef PLATFORM_WINDOWS
 		TerminateProcess(GetCurrentProcess(), EXIT_FAILURE);
 		#else
 		#error your platform is currently not supported.
 		#endif
 	}
-
 }

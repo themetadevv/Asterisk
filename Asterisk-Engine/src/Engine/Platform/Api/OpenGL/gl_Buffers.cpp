@@ -1,7 +1,7 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 #include "Logger/Logger.h"
 
 #include "Engine/Platform/Api/OpenGL/gl_Debug.h"
@@ -45,7 +45,7 @@ namespace asterisk {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void OpenGL_VertexBuffer::SetDataDynamic(size_t size, const void* data) {
+	void OpenGL_VertexBuffer::SetData(size_t size, const void* data) {
 		Bind();
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 		Unbind();

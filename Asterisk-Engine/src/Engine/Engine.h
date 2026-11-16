@@ -31,6 +31,10 @@
 #include "Engine/Renderer/RenderApi.h"
 #include "Engine/Renderer/RenderCommand.h"
 #include "Engine/Renderer/Buffers.h"
+#include "Engine/Renderer/Shader.h"
+
+// Utils
+#include "Utils/Utils.h"
 
 namespace asterisk {
 	struct EngineSetting {

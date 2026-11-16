@@ -10,12 +10,13 @@
 
 #define INVALID_SHADER_ID -1
 #define INVALID_SHADER_LOCATION -1
+#define SHADER_TOKEN_START "$TYPE"
 
 namespace asterisk {
-	inline const char* ShaderTypeToken[] = {
-		"$TYPE_VERTEX", 
-		"$TYPE_FRAGMENT",
-		"$TYPE_GEOMETRY"
+	inline std::string ShaderTypeToken[] = {
+		SHADER_TOKEN_START"_VERTEX",
+		SHADER_TOKEN_START"_FRAGMENT",
+		SHADER_TOKEN_START"_GEOMETRY"
 	};
 
 	class ASTERISK_ENGINE_API Shader {

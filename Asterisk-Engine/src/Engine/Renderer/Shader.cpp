@@ -1,7 +1,8 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
+
 #include "Logger/Logger.h"
 
 #include "Engine/Renderer/RenderApi.h"

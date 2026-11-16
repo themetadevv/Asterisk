@@ -1,7 +1,7 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 #include "Logger/Logger.h"
 
 #include "Engine/Renderer/RenderApi.h"
@@ -11,7 +11,7 @@
 
 namespace asterisk {
 	void BufferLayout::AddBufferData(BufferData& data) {
-		m_BufferData.push_back(data);
+		m_BufferStorage.push_back(data);
 		data.OffsetInMemory = m_Stride;
 		m_Stride += data.Size;
 	}

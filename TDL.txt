@@ -6,11 +6,11 @@ Core Systems
 5. Native Module Loader
 
 Engine -> Renderer Objects
-1. Vertex Buffer Object
-2. Index Buffer Object
+1. Vertex Buffer Object - Done
+2. Index Buffer Object - Done
 3. Vertex Array Object
 4. Frame Buffer Object
-6. Shader Loader
-5. Texture Loader
+6. Shader Object - Done
+5. Texture Object - Done
 
 Engine -> Renderer2D

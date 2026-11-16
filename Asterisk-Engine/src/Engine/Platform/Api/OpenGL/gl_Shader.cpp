@@ -1,8 +1,9 @@
 
 #include "astpch.h"
 
-#include "Core/Runtime.h"
+#include "Core/NativeDialog.h"
 #include "Logger/Logger.h"
+#include "Utils/Utils.h"
 
 #include "Engine/Platform/Api/OpenGL/gl_Debug.h"
 #include "Engine/Platform/Api/OpenGL/gl_Shader.h"
@@ -24,6 +25,7 @@ namespace asterisk {
 		m_Path(path),
 		m_HasGeometry(has_geometry)
 	{
+		ParseShaderFile();
 		Load();
 	}
 
@@ -51,6 +53,7 @@ namespace asterisk {
 				"[OpenGL_Shader] Failed to compile '{0}' shader. \nSource Path: '{1}'. \nLog Buffer: {2}",
 				ShaderTypeString(type), m_Path, log_buffer
 			);
+			delete[] log_buffer;
 			return false;
 		}
 
@@ -69,8 +72,10 @@ namespace asterisk {
 			glGetProgramInfoLog(program, log_msg_size, nullptr, log_buffer);
 			ASTR_ERROR(
 				"[OpenGL_Shader] Failed to link shader program. \nSource Path: '{0}'. \nLog Buffer: {1}",
-				m_Path, log_buffer
+				m_Path, 
+				log_buffer
 			);
+			delete[] log_buffer;
 			return false;
 		}
 
@@ -173,6 +178,63 @@ namespace asterisk {
 
 	// TODO
 	bool OpenGL_Shader::ParseShaderFile() {
+		std::string src = utils::ReadFile(m_Path);
+		if (src.empty()) {
+			auto result = ShowErrorOccuredDialog(
+				std::format("[OpenGL_Shader] shader source is empty! path: {}", m_Path)
+			);
+
+			if (result == DialogResult::OK) {
+				TerminateProgram();
+				return false;
+			}
+		}
+			
+		ShaderType type = ShaderType::Invalid;
+
+		std::stringstream ss(src);
+		std::string line;
+
+		while (getline(ss, line)) {
+			// check for windows cr
+			if (!line.empty() && line.back() == '\r')
+				line.pop_back();
+
+			// ignore empty line
+			if (line.empty())
+				continue;
+
+			// ignore comments
+			if (line.starts_with("//"))
+				continue;
+
+			// shader selection
+			if (line == ShaderTypeToken[(int)ShaderType::Vertex]) {
+				type = ShaderType::Vertex;
+				continue;
+			}
+			
+			if (line == ShaderTypeToken[(int)ShaderType::Fragment]) {
+				type = ShaderType::Fragment;
+				continue;
+			}
+
+			if (line == ShaderTypeToken[(int)ShaderType::Geometry]) {
+				type = ShaderType::Geometry;
+				continue;
+			}
+
+			if (type == ShaderType::Invalid)
+				continue;
+
+			// ignore tokens
+			if (line.starts_with(SHADER_TOKEN_START))
+				continue;
+
+			m_ShaderSource[(int)type] += line;
+			m_ShaderSource[(int)type] += '\n';
+		}
+
 		return true;
 	}
 

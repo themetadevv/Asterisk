@@ -16,26 +16,28 @@ class EditorLayer : public Layer {
 public:
 	TimeStep ts;
 
-	SharedPtr<VertexBuffer> m_VertexBuffer;
-	SharedPtr<VertexBuffer> m_IndexBuffer;
+	SharedPtr<Shader> m_Shader;
 
 	EditorLayer() : Layer("Editor Layer") 
 	{ }
 
 	void OnAttach() override {
-
 		auto& engine = Engine::Get();
 		auto& imgui_layer = engine.GetImGuiLayer();
 
 		ImGui::SetCurrentContext(imgui_layer.GetContext());
+
+		m_Shader = Shader::Create("assets/test.glsl");
 	}
 
 	void OnRender(float dt) override {
-		uint64_t id = (uint64_t)UUID();
+		uint64_t id = (uint64_t)rand_uint64_t();
 
 		ts.Update();
 
 		ImGui::Begin("Editor Layer");
+
+		ImGui::Text("Delta Time: %f", ts.GetDeltaTime());
 
 		ImGui::End();
 	}
